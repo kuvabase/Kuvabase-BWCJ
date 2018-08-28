@@ -1,0 +1,50 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.novoda:bintray-release:0.3.4'
+    }
+}
+
+apply plugin: 'java-library'
+apply plugin: 'com.novoda.bintray-release'
+
+group 'org.openkuva.kuvabase'
+version '0.1.8.21'
+
+repositories {
+    google()
+    jcenter()
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'org.dashj:dashj-core:0.14.4.4'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+
+    implementation group: 'org.mozilla', name: 'rhino', version: '1.7.10'
+    implementation 'com.google.guava:guava:18.0'
+
+    testImplementation 'org.mockito:mockito-core:1.10.19'
+    testImplementation 'junit:junit:4.12'
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+publish {
+    groupId = project.group
+    artifactId = 'bwcj'
+    publishVersion = project.version
+    desc = 'The client library written on java for BWS (Bitcore wallet service).'
+    licences = ['BSD 3-Clause']
+    website = 'https://github.com/kuvabase/Kuvabase-BWCJ'
+    userOrg = 'kuvabase'
+    bintrayUser = ''
+    bintrayKey = ''
+    dryRun = false
+}
