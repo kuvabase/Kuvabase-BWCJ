@@ -52,7 +52,7 @@ public interface ITransactionProposal {
 
     IOutput[] getOutputs();
 
-    int getAmount();
+    long getAmount();
 
     Object getMessage();
 

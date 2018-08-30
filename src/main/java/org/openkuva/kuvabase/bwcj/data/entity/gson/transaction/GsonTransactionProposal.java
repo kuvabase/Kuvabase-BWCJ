@@ -37,12 +37,12 @@ package org.openkuva.kuvabase.bwcj.data.entity.gson.transaction;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.IAction;
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.IInput;
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.IOutput;
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ITransactionProposal;
+
+import java.util.List;
 
 public class GsonTransactionProposal implements ITransactionProposal {
 
@@ -72,7 +72,7 @@ public class GsonTransactionProposal implements ITransactionProposal {
     public GsonOutput[] outputs = null;
     @SerializedName("amount")
     @Expose
-    public int amount;
+    public long amount;
     @SerializedName("message")
     @Expose
     public Object message;
@@ -277,7 +277,7 @@ public class GsonTransactionProposal implements ITransactionProposal {
     }
 
     @Override
-    public int getAmount() {
+    public long getAmount() {
         return amount;
     }
 
