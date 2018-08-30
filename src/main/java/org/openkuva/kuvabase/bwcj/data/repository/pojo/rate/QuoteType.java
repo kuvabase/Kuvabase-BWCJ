@@ -13,7 +13,7 @@
  *      notice, this list of conditions and the following disclaimer in the
  *      documentation and/or other materials provided with the distribution.
  *
- *      * Neither the name of the One Kuva LLC, known as OpenKuva.org nor the names of its
+ *      * Neither the name of the copyright holder nor the names of its
  *      contributors may be used to endorse or promote products derived from this
  *      software without specific prior written permission.
  *
@@ -33,31 +33,10 @@
 
 package org.openkuva.kuvabase.bwcj.data.repository.pojo.rate;
 
-import org.openkuva.kuvabase.bwcj.data.repository.interfaces.rate.IRateRepository;
-import org.openkuva.kuvabase.bwcj.service.rate.interfaces.IBlackcarrotRateApi;
+public final class QuoteType {
+    public static final String USD_USD = "USD_USD";
+    public static final String DASH_USD = "DASH_USD";
 
-import static org.openkuva.kuvabase.bwcj.data.repository.pojo.rate.QuoteType.DASH_USD;
-import static org.openkuva.kuvabase.bwcj.data.repository.pojo.rate.QuoteType.USD_USD;
-
-public class RealTimeRateRepository implements IRateRepository {
-    private final IBlackcarrotRateApi service;
-
-    public RealTimeRateRepository(IBlackcarrotRateApi service) {
-        this.service = service;
-    }
-
-    @Override
-    public double getByQuote(String quote) {
-        if (quote.equals(DASH_USD)) {
-            return
-                    Double.parseDouble(
-                            service
-                                    .getUSDRate()
-                                    .getRate());
-        } else if (quote.equals(USD_USD)) {
-            return 1;
-        } else {
-            throw new IllegalArgumentException("quote = " + quote);
-        }
+    private QuoteType() {
     }
 }
