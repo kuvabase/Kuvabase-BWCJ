@@ -33,12 +33,13 @@
 
 package org.openkuva.kuvabase.bwcj.service.rate.retrofit2;
 
-import java.io.IOException;
-
 import org.openkuva.kuvabase.bwcj.service.rate.interfaces.IBlackcarrotRateApi;
 import org.openkuva.kuvabase.bwcj.service.rate.interfaces.IRateResponse;
 import org.openkuva.kuvabase.bwcj.service.rate.retrofit2.gson.RateResponse;
 import org.openkuva.kuvabase.bwcj.service.retrofit2utils.RequestFailedException;
+
+import java.io.IOException;
+
 import retrofit2.Response;
 
 public class Retrofit2RateApiBridge implements IBlackcarrotRateApi {
@@ -53,6 +54,24 @@ public class Retrofit2RateApiBridge implements IBlackcarrotRateApi {
         try {
             Response<RateResponse> response = rateAPI
                     .getUSDRate()
+                    .execute();
+
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                throw new RequestFailedException(response);
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public IRateResponse getDASHRate() {
+        try {
+            Response<RateResponse> response = rateAPI
+                    .getDASHRate()
                     .execute();
 
             if (response.isSuccessful()) {

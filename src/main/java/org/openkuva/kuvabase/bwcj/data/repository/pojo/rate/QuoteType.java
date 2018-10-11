@@ -36,6 +36,7 @@ package org.openkuva.kuvabase.bwcj.data.repository.pojo.rate;
 public final class QuoteType {
     public static final String USD_USD = "USD_USD";
     public static final String DASH_USD = "DASH_USD";
+    public static final String USD_DASH = "USD_DASH";
 
     private QuoteType() {
     }

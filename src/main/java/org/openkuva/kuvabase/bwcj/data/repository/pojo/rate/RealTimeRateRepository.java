@@ -37,6 +37,7 @@ import org.openkuva.kuvabase.bwcj.data.repository.interfaces.rate.IRateRepositor
 import org.openkuva.kuvabase.bwcj.service.rate.interfaces.IBlackcarrotRateApi;
 
 import static org.openkuva.kuvabase.bwcj.data.repository.pojo.rate.QuoteType.DASH_USD;
+import static org.openkuva.kuvabase.bwcj.data.repository.pojo.rate.QuoteType.USD_DASH;
 import static org.openkuva.kuvabase.bwcj.data.repository.pojo.rate.QuoteType.USD_USD;
 
 public class RealTimeRateRepository implements IRateRepository {
@@ -56,6 +57,12 @@ public class RealTimeRateRepository implements IRateRepository {
                                     .getRate());
         } else if (quote.equals(USD_USD)) {
             return 1;
+        } else if (quote.equals(USD_DASH)) {
+            return
+                    Double.parseDouble(
+                            service
+                                    .getDASHRate()
+                                    .getRate());
         } else {
             throw new IllegalArgumentException("quote = " + quote);
         }
