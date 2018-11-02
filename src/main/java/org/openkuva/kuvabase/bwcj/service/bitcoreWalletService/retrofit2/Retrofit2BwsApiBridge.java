@@ -33,36 +33,38 @@
 
 package org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.retrofit2;
 
-import java.io.IOException;
-import java.util.Map;
-
-import org.openkuva.kuvabase.bwcj.service.retrofit2utils.RequestFailedException;
-import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.address.IAddressesResponse;
-import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.wallets.ICreateWalletResponse;
-import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.wallets.ICreateWalletRequest;
+import org.openkuva.kuvabase.bwcj.data.entity.gson.fee.GsonFeeLevel;
+import org.openkuva.kuvabase.bwcj.data.entity.gson.transaction.GsonTransactionProposal;
+import org.openkuva.kuvabase.bwcj.data.entity.gson.wallet.GsonWallet;
+import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ITransactionProposal;
+import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ITransactionRequest;
+import org.openkuva.kuvabase.bwcj.data.entity.interfaces.wallet.IWallet;
+import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.IBitcoreWalletServerAPI;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.address.AddressesRequest;
+import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.address.IAddressesResponse;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.broadcast.BroadcastRequest;
-import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.wallets.IJoinWalletRequest;
-import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.wallets.IJoinWalletResponse;
+import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.exception.InsufficientFundsException;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.login.LoginRequest;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.publish.IPublishRequest;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.signatures.ISignatureRequest;
-import org.openkuva.kuvabase.bwcj.data.entity.gson.transaction.GsonTransactionProposal;
-import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ITransactionProposal;
+import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.wallets.ICreateWalletRequest;
+import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.wallets.ICreateWalletResponse;
+import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.wallets.IJoinWalletRequest;
+import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.wallets.IJoinWalletResponse;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.retrofit2.gson.addresses.GsonAddressesResponse;
-import org.openkuva.kuvabase.bwcj.data.entity.gson.fee.GsonFeeLevel;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.retrofit2.gson.notification.GsonNotificationResponse;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.retrofit2.gson.publish.GsonPublishRequest;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.retrofit2.gson.signatures.GsonSignatureRequest;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.retrofit2.gson.transaction.GsonTransactionRequest;
-import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ITransactionRequest;
-import org.openkuva.kuvabase.bwcj.data.entity.gson.wallet.GsonWallet;
-import org.openkuva.kuvabase.bwcj.data.entity.interfaces.wallet.IWallet;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.retrofit2.gson.wallets.GsonCreateWalletRequest;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.retrofit2.gson.wallets.GsonCreateWalletResponse;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.retrofit2.gson.wallets.GsonJoinWalletRequest;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.retrofit2.gson.wallets.GsonJoinWalletResponse;
-import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.IBitcoreWalletServerAPI;
+import org.openkuva.kuvabase.bwcj.service.retrofit2utils.RequestFailedException;
+
+import java.io.IOException;
+import java.util.Map;
+
 import retrofit2.Response;
 
 public class Retrofit2BwsApiBridge implements IBitcoreWalletServerAPI {
@@ -154,6 +156,10 @@ public class Retrofit2BwsApiBridge implements IBitcoreWalletServerAPI {
             if (response.isSuccessful()) {
                 return response.body();
             } else {
+                String errorBody = response.errorBody().string();
+                if (errorBody.contains("INSUFFICIENT_FUNDS")){
+                    throw new InsufficientFundsException("INSUFFICIENT_FUNDS");
+                }
                 throw new RequestFailedException(response);
             }
 
