@@ -34,7 +34,8 @@
 package org.openkuva.kuvabase.bwcj.domain.useCases.wallet.getWalletBalance;
 
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.wallet.IWallet;
+import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.exception.CopayerNotFoundException;
 
 public interface IGetWalletBalanceUseCase {
-    IWallet execute();
+    IWallet execute() throws CopayerNotFoundException;
 }

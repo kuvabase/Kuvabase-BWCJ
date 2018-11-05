@@ -34,11 +34,11 @@
 package org.openkuva.kuvabase.bwcj.domain.useCases.wallet.recoveryWalletFromMnemonic;
 
 import org.bitcoinj.core.ECKey;
+import org.openkuva.kuvabase.bwcj.data.entity.interfaces.wallet.IWallet;
+import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.exception.CopayerNotFoundException;
 
 import java.util.List;
 
-import org.openkuva.kuvabase.bwcj.data.entity.interfaces.wallet.IWallet;
-
 public interface IRecoveryWalletFromMnemonicUseCase {
-    IWallet execute(List<String> mnemonic, ECKey walletPrivateKey);
+    IWallet execute(List<String> mnemonic, ECKey walletPrivateKey) throws CopayerNotFoundException;
 }

@@ -33,12 +33,13 @@
 
 package org.openkuva.kuvabase.bwcj.domain.useCases.wallet.getWalletBalance;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.openkuva.kuvabase.bwcj.data.entity.interfaces.wallet.IWallet;
 import org.openkuva.kuvabase.bwcj.data.repository.interfaces.wallet.IWalletRepository;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.IBitcoreWalletServerAPI;
-import org.openkuva.kuvabase.bwcj.data.entity.interfaces.wallet.IWallet;
+import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.exception.CopayerNotFoundException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class GetWalletBalanceUseCase implements IGetWalletBalanceUseCase {
 
@@ -51,7 +52,7 @@ public class GetWalletBalanceUseCase implements IGetWalletBalanceUseCase {
     }
 
     @Override
-    public IWallet execute() {
+    public IWallet execute() throws CopayerNotFoundException {
         return
                 repository.save(
                         bwsApi.getWallets(
