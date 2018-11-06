@@ -42,6 +42,7 @@ import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.addres
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.broadcast.BroadcastRequest;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.exception.CopayerNotFoundException;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.exception.InsufficientFundsException;
+import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.exception.InvalidWalletAddressException;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.login.LoginRequest;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.notification.INotificationResponse;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.publish.IPublishRequest;
@@ -78,7 +79,7 @@ public interface IBitcoreWalletServerAPI {
     /**
      * POST v2/txproposals/
      */
-    ITransactionProposal postTxProposals(ITransactionRequest transactionRequest) throws InsufficientFundsException;
+    ITransactionProposal postTxProposals(ITransactionRequest transactionRequest) throws InsufficientFundsException, InvalidWalletAddressException;
 
     /**
      * GET v1/feelevels
