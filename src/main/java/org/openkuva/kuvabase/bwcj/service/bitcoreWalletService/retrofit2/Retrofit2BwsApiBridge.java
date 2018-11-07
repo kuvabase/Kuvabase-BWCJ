@@ -45,6 +45,7 @@ import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.addres
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.broadcast.BroadcastRequest;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.exception.CopayerNotFoundException;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.exception.InsufficientFundsException;
+import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.exception.InvalidAmountException;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.exception.InvalidWalletAddressException;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.login.LoginRequest;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.publish.IPublishRequest;
@@ -169,6 +170,8 @@ public class Retrofit2BwsApiBridge implements IBitcoreWalletServerAPI {
                     throw new InsufficientFundsException("INSUFFICIENT_FUNDS");
                 } else if (errorBody.contains("INVALID_ADDRESS")) {
                     throw new InvalidWalletAddressException("INVALID_ADDRESS");
+                } else if (errorBody.contains("Invalid amount")) {
+                    throw new InvalidAmountException("Invalid amount");
                 }
                 throw new RequestFailedException(response);
             }

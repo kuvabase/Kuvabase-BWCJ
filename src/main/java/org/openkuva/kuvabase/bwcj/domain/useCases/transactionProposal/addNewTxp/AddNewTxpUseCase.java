@@ -34,13 +34,13 @@
 package org.openkuva.kuvabase.bwcj.domain.useCases.transactionProposal.addNewTxp;
 
 import org.bitcoinj.core.Coin;
-
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ICustomData;
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.IOutput;
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ITransactionProposal;
 import org.openkuva.kuvabase.bwcj.data.entity.pojo.transaction.Output;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.IBitcoreWalletServerAPI;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.exception.InsufficientFundsException;
+import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.exception.InvalidAmountException;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.exception.InvalidWalletAddressException;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.pojo.transaction.TransactionRequest;
 
@@ -52,12 +52,12 @@ public class AddNewTxpUseCase implements IAddNewTxpUseCase {
     }
 
     @Override
-    public ITransactionProposal execute(String address, String dash, String msg, boolean dryRun, ICustomData customData) throws InsufficientFundsException, InvalidWalletAddressException {
+    public ITransactionProposal execute(String address, String dash, String msg, boolean dryRun, ICustomData customData) throws InsufficientFundsException, InvalidWalletAddressException, InvalidAmountException {
         return execute(address, dash, msg, dryRun, "send", customData);
     }
 
     @Override
-    public ITransactionProposal execute(String address, String dash, String msg, boolean dryRun, String operation, ICustomData customData) throws InsufficientFundsException, InvalidWalletAddressException {
+    public ITransactionProposal execute(String address, String dash, String msg, boolean dryRun, String operation, ICustomData customData) throws InsufficientFundsException, InvalidWalletAddressException, InvalidAmountException {
         return
                 bwsApi.postTxProposals(
                         new TransactionRequest(
