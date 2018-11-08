@@ -35,7 +35,7 @@ package org.openkuva.kuvabase.bwcj.service.rate.retrofit2;
 
 import org.openkuva.kuvabase.bwcj.service.rate.interfaces.IBlackcarrotRateApi;
 import org.openkuva.kuvabase.bwcj.service.rate.interfaces.IRateResponse;
-import org.openkuva.kuvabase.bwcj.service.rate.retrofit2.gson.RateResponse;
+import org.openkuva.kuvabase.bwcj.service.rate.retrofit2.gson.GsonRateResponse;
 import org.openkuva.kuvabase.bwcj.service.retrofit2utils.RequestFailedException;
 
 import java.io.IOException;
@@ -52,7 +52,7 @@ public class Retrofit2RateApiBridge implements IBlackcarrotRateApi {
     @Override
     public IRateResponse getUSDRate() {
         try {
-            Response<RateResponse> response = rateAPI
+            Response<GsonRateResponse> response = rateAPI
                     .getUSDRate()
                     .execute();
 
@@ -70,7 +70,7 @@ public class Retrofit2RateApiBridge implements IBlackcarrotRateApi {
     @Override
     public IRateResponse getDASHRate() {
         try {
-            Response<RateResponse> response = rateAPI
+            Response<GsonRateResponse> response = rateAPI
                     .getDASHRate()
                     .execute();
 

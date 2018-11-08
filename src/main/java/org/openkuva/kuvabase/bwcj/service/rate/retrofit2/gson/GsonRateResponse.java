@@ -38,7 +38,7 @@ import com.google.gson.annotations.SerializedName;
 
 import org.openkuva.kuvabase.bwcj.service.rate.interfaces.IRateResponse;
 
-public class RateResponse implements IRateResponse {
+public class GsonRateResponse implements IRateResponse {
 
     @SerializedName("server_ts")
     @Expose

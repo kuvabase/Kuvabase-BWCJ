@@ -35,14 +35,16 @@
 package org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.retrofit2.gson.signatures;
 
 import com.google.gson.annotations.Expose;
-
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
 
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.signatures.ISignatureRequest;
+
+import java.util.List;
 
 public class GsonSignatureRequest implements ISignatureRequest {
 
     @Expose
+    @SerializedName("signatures")
     private final List<String> signatures;
 
     public GsonSignatureRequest(ISignatureRequest origin) {

@@ -33,7 +33,7 @@
 
 package org.openkuva.kuvabase.bwcj.service.rate.retrofit2;
 
-import org.openkuva.kuvabase.bwcj.service.rate.retrofit2.gson.RateResponse;
+import org.openkuva.kuvabase.bwcj.service.rate.retrofit2.gson.GsonRateResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -41,8 +41,8 @@ import retrofit2.http.GET;
 public interface IRetrofit2RateAPI {
 
     @GET("DASH_USD.json")
-    Call<RateResponse> getUSDRate();
+    Call<GsonRateResponse> getUSDRate();
 
     @GET("USD_DASH.json")
-    Call<RateResponse> getDASHRate();
+    Call<GsonRateResponse> getDASHRate();
 }
