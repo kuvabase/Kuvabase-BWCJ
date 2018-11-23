@@ -33,13 +33,13 @@
 
 package org.openkuva.kuvabase.bwcj.data.repository.pojo.wallet;
 
+import org.openkuva.kuvabase.bwcj.data.entity.interfaces.wallet.IWallet;
+import org.openkuva.kuvabase.bwcj.data.repository.interfaces.wallet.IWalletRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.openkuva.kuvabase.bwcj.data.entity.interfaces.wallet.IWallet;
-import org.openkuva.kuvabase.bwcj.data.repository.interfaces.wallet.IWalletRepository;
 
 public class InMemoryWalletRepository implements IWalletRepository {
     private static final Map<String, IWallet> MAP = new ConcurrentHashMap<>();
@@ -58,5 +58,10 @@ public class InMemoryWalletRepository implements IWalletRepository {
     @Override
     public List<IWallet> getAll() {
         return new ArrayList<>(MAP.values());
+    }
+
+    @Override
+    public void clear() {
+        MAP.clear();
     }
 }

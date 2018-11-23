@@ -33,10 +33,10 @@
 
 package org.openkuva.kuvabase.bwcj.data.repository.pojo.wallet;
 
-import java.util.List;
-
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.wallet.IWallet;
 import org.openkuva.kuvabase.bwcj.data.repository.interfaces.wallet.IObservableWalletRepository;
+
+import java.util.List;
 
 public class SyncObservableWalletRepository implements IObservableWalletRepository {
     private final IObservableWalletRepository origin;
@@ -65,6 +65,13 @@ public class SyncObservableWalletRepository implements IObservableWalletReposito
     public List<IWallet> getAll() {
         synchronized (syncObject) {
             return origin.getAll();
+        }
+    }
+
+    @Override
+    public void clear() {
+        synchronized (syncObject) {
+            origin.clear();
         }
     }
 

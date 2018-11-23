@@ -33,9 +33,9 @@
 
 package org.openkuva.kuvabase.bwcj.data.repository.interfaces.wallet;
 
-import java.util.List;
-
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.wallet.IWallet;
+
+import java.util.List;
 
 public interface IWalletRepository {
     IWallet save(IWallet wallet);
@@ -43,4 +43,6 @@ public interface IWalletRepository {
     IWallet getById(String walletId);
 
     List<IWallet> getAll();
+
+    void clear();
 }
