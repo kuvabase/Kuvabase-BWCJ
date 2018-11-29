@@ -59,7 +59,7 @@ public class UsdToDashUseCaseTest {
     public void testExecute() {
         Assert.assertEquals(
                 0.00391562d,
-                usdToDashUseCase.execute(1, "DASH_USD"),
+                usdToDashUseCase.convertAndRound(1, "DASH_USD"),
                 0.0d);
     }
 }

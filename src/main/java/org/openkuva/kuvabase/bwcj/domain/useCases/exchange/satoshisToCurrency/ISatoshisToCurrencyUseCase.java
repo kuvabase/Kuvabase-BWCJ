@@ -34,5 +34,6 @@
 package org.openkuva.kuvabase.bwcj.domain.useCases.exchange.satoshisToCurrency;
 
 public interface ISatoshisToCurrencyUseCase {
-    double execute(long satoshis, String quote);
+    double convertAndRound(long satoshis, String quote);
+    double convertAndCut(long satoshis, String quote);
 }

@@ -57,7 +57,7 @@ public class SatoshisToCurrencyUseCaseTest {
     @Test
     public void testExecute() {
         Assert.assertEquals(
-                satoshisToCurrencyUseCase.execute(391562, "DASH_USD"),
+                satoshisToCurrencyUseCase.convertAndRound(391562, "DASH_USD"),
                 1.d,
                 .0);
     }

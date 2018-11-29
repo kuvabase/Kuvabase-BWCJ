@@ -36,6 +36,7 @@ package org.openkuva.kuvabase.bwcj.domain.useCases.exchange.currencyToSatoshis;
 
 import org.openkuva.kuvabase.bwcj.data.repository.interfaces.rate.IRateRepository;
 
+import static org.openkuva.kuvabase.bwcj.domain.utils.MathUtils.cut;
 import static org.openkuva.kuvabase.bwcj.domain.utils.MathUtils.round;
 import static org.bitcoinj.core.Coin.SMALLEST_UNIT_EXPONENT;
 
@@ -47,8 +48,14 @@ public class CurrencyToSatoshisUseCase implements ICurrencyToSatoshisUseCase {
     }
 
     @Override
-    public double execute(double amount, String quote) {
+    public double convertAndRound(double amount, String quote) {
         double rate = rateRepository.getByQuote(quote);
         return round(amount / rate, SMALLEST_UNIT_EXPONENT);
+    }
+
+    @Override
+    public double convertAndCut(double amount, String quote) {
+        double rate = rateRepository.getByQuote(quote);
+        return cut(amount / rate, SMALLEST_UNIT_EXPONENT);
     }
 }
