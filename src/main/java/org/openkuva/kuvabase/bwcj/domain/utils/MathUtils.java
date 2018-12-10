@@ -33,6 +33,11 @@
 
 package org.openkuva.kuvabase.bwcj.domain.utils;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
 public final class MathUtils {
     private MathUtils() {
     }
@@ -40,10 +45,18 @@ public final class MathUtils {
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 
-        long factor = (long) Math.pow(10, places);
-        value = value * factor;
-        long tmp = Math.round(value);
-        return (double) tmp / factor;
+        StringBuilder pattern = new StringBuilder("0.");
+
+        for (int i = 0; i < places; i++) {
+            pattern.append("0");
+        }
+
+        DecimalFormat df =
+                new DecimalFormat(pattern.toString(), DecimalFormatSymbols.getInstance(Locale.US));
+
+        df.setRoundingMode(RoundingMode.CEILING);
+        return
+                Double.parseDouble(df.format(value));
     }
 
     public static double cut(double value, int places) {
@@ -51,6 +64,7 @@ public final class MathUtils {
 
         long factor = (long) Math.pow(10, places);
         value = value * factor;
-        return (long) value / (double) factor;    }
+        return (long) value / (double) factor;
+    }
 
 }
