@@ -41,4 +41,6 @@ public interface ICustomData {
     Object getBookCashId();
 
     Object getMessage();
+
+    String getFundsRequestId();
 }

@@ -41,12 +41,14 @@ public class CustomData implements ICustomData {
     private final String operation;
     private final Object bookCashId;
     private final Object message;
+    private final String fundsRequestId;
 
-    public CustomData(String rate, String operation, Object bookCashId, Object message) {
+    public CustomData(String rate, String operation, Object bookCashId, Object message, String fundsRequestId) {
         this.rate = rate;
         this.operation = operation;
         this.bookCashId = bookCashId;
         this.message = message;
+        this.fundsRequestId = fundsRequestId;
     }
 
     @Override
@@ -67,5 +69,10 @@ public class CustomData implements ICustomData {
     @Override
     public Object getMessage() {
         return message;
+    }
+
+    @Override
+    public String getFundsRequestId() {
+        return fundsRequestId;
     }
 }

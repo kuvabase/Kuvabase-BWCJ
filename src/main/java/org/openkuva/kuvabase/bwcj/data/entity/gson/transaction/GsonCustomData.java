@@ -53,6 +53,9 @@ public class GsonCustomData implements ICustomData {
     @SerializedName("message")
     @Expose
     public Object message;
+    @SerializedName("fundsRequestId")
+    @Expose
+    public String fundsRequestId;
 
     public GsonCustomData() {
     }
@@ -62,6 +65,7 @@ public class GsonCustomData implements ICustomData {
         this.operation = origin.getOperation();
         this.bookCashId = origin.getBookCashId();
         this.message = origin.getMessage();
+        this.fundsRequestId = origin.getFundsRequestId();
     }
 
     @Override
@@ -82,5 +86,10 @@ public class GsonCustomData implements ICustomData {
     @Override
     public Object getMessage() {
         return message;
+    }
+
+    @Override
+    public String getFundsRequestId() {
+        return fundsRequestId;
     }
 }
