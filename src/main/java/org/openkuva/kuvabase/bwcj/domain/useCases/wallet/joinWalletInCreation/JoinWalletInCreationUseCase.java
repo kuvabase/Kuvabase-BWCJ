@@ -61,20 +61,20 @@ public class JoinWalletInCreationUseCase implements IJoinWalletInCreationUseCase
                 credentials.getWalletPrivateKey();
         String xPubKey =
                 CopayersCryptUtils.derivedXPrivKey(
-                        credentials.getSeedWords(),
+                        credentials.getSeed(),
                         credentials.getNetworkParameters())
                         .serializePubB58(credentials.getNetworkParameters());
 
         String requestPubKey =
                 CopayersCryptUtils.requestDerivation(
-                        credentials.getSeedWords())
+                        credentials.getSeed())
                         .getPublicKeyAsHex();
 
         String personalEncryptingKey =
                 CopayersCryptUtils.personalEncryptingKey(
                         CopayersCryptUtils.entropySource(
                                 CopayersCryptUtils.requestDerivation(
-                                        credentials.getSeedWords())));
+                                        credentials.getSeed())));
 
         String encCustomData =
                 new SjclMessageEncryptor()

@@ -36,17 +36,15 @@ package org.openkuva.kuvabase.bwcj.data.entity.interfaces.credentials;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.NetworkParameters;
 
-import java.util.List;
-
 public interface ICredentials {
 
     ECKey getWalletPrivateKey();
 
     void setWalletPrivateKey(ECKey walletPrivateKey);
 
-    void setSeedWords(List<String> seedWords);
+    void setSeed(byte[] seed);
 
-    List<String> getSeedWords();
+    byte[] getSeed();
 
     NetworkParameters getNetworkParameters();
 

@@ -62,7 +62,7 @@ public class PublishTxpUseCase implements IPublishTxpUseCase {
                                         Utils.HEX.encode(
                                                 buildTx(toPublish).unsafeBitcoinSerialize()),
                                         CopayersCryptUtils.requestDerivation(
-                                                credentials.getSeedWords())
+                                                credentials.getSeed())
                                                 .getPrivateKeyAsHex())));
     }
 }

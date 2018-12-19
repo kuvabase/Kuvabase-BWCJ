@@ -33,6 +33,13 @@
 
 package org.openkuva.kuvabase.bwcj.domain.useCases.credentials;
 
+import java.util.List;
+
 public interface IInitializeCredentialsUseCase {
-    void execute(String passphrase);
+
+    /**
+     * @param passphrase A user supplied passphrase, or an empty string if there is no passphrase
+     * @return mnemonic code
+     */
+    List<String> execute(String passphrase);
 }

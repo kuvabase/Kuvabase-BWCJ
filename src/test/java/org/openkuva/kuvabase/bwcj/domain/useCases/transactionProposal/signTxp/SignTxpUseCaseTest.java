@@ -35,6 +35,7 @@ package org.openkuva.kuvabase.bwcj.domain.useCases.transactionProposal.signTxp;
 
 import com.google.gson.Gson;
 
+import org.bitcoinj.crypto.MnemonicCode;
 import org.bitcoinj.params.TestNet3Params;
 import org.junit.Assert;
 import org.junit.Before;
@@ -70,7 +71,7 @@ public class SignTxpUseCaseTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        Mockito.when(credentials.getSeedWords()).thenReturn(split("faith space neutral exhaust worth amused average skull differ track best obey"));
+        Mockito.when(credentials.getSeed()).thenReturn(MnemonicCode.toSeed(split("faith space neutral exhaust worth amused average skull differ track best obey"), ""));
         Mockito.when(credentials.getNetworkParameters()).thenReturn(TestNet3Params.get());
 
         signTxpUseCase = new SignTxpUseCase(bwsApi, credentials);

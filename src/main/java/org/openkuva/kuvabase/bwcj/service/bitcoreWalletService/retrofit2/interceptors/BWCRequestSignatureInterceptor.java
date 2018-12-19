@@ -33,10 +33,11 @@
 
 package org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.retrofit2.interceptors;
 
+import org.openkuva.kuvabase.bwcj.data.entity.interfaces.credentials.ICredentials;
+
 import java.io.IOException;
 import java.util.Arrays;
 
-import org.openkuva.kuvabase.bwcj.data.entity.interfaces.credentials.ICredentials;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -66,7 +67,7 @@ public class BWCRequestSignatureInterceptor implements Interceptor {
                         .addHeader(
                                 "x-identity",
                                 copayerId(
-                                        credentials.getSeedWords(),
+                                        credentials.getSeed(),
                                         credentials.getNetworkParameters()))
                         .addHeader("x-signature",
                                 signRequest(
@@ -74,7 +75,7 @@ public class BWCRequestSignatureInterceptor implements Interceptor {
                                         extractUrl(oldReq.url().toString()),
                                         bodyToString(oldReq.body()),
                                         requestDerivation(
-                                                credentials.getSeedWords())
+                                                credentials.getSeed())
                                                 .getPrivateKeyAsHex()))
                         .build();
 

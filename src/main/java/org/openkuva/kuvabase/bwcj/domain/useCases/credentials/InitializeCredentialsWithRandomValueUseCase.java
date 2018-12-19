@@ -36,10 +36,11 @@ package org.openkuva.kuvabase.bwcj.domain.useCases.credentials;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.Utils;
 import org.bitcoinj.wallet.DeterministicSeed;
+import org.openkuva.kuvabase.bwcj.data.entity.interfaces.credentials.ICredentials;
 
 import java.security.SecureRandom;
-
-import org.openkuva.kuvabase.bwcj.data.entity.interfaces.credentials.ICredentials;
+import java.util.Collections;
+import java.util.List;
 
 public class InitializeCredentialsWithRandomValueUseCase implements IInitializeCredentialsUseCase {
 
@@ -50,7 +51,7 @@ public class InitializeCredentialsWithRandomValueUseCase implements IInitializeC
     }
 
     @Override
-    public void execute(String passphrase) {
+    public List<String> execute(String passphrase) {
         DeterministicSeed deterministicSeed =
                 new DeterministicSeed(
                         new SecureRandom(),
@@ -58,7 +59,9 @@ public class InitializeCredentialsWithRandomValueUseCase implements IInitializeC
                         passphrase,
                         Utils.currentTimeSeconds());
 
-        credentials.setSeedWords(deterministicSeed.getMnemonicCode());
+        credentials.setSeed(deterministicSeed.getSeedBytes());
         credentials.setWalletPrivateKey(new ECKey());
+
+        return Collections.unmodifiableList(deterministicSeed.getMnemonicCode());
     }
 }

@@ -43,49 +43,41 @@ import org.bitcoinj.core.Utils;
 import org.bitcoinj.crypto.ChildNumber;
 import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.crypto.HDKeyDerivation;
-import org.bitcoinj.crypto.MnemonicCode;
 
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.List;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import static org.openkuva.kuvabase.bwcj.domain.utils.ListUtils.join;
 import static org.bitcoinj.core.Utils.HEX;
+import static org.openkuva.kuvabase.bwcj.domain.utils.ListUtils.join;
 
 public final class CopayersCryptUtils {
     private CopayersCryptUtils() {
     }
 
-    public static String copayerId(List<String> words, NetworkParameters netParams) {
+    public static String copayerId(byte[] seed, NetworkParameters netParams) {
         return
                 xPubToCopayerId(
                         xPubKey(
-                                derivedXPrivKey(words, netParams),
+                                derivedXPrivKey(seed, netParams),
                                 netParams));
     }
 
-    public static DeterministicKey derivedXPrivKey(List<String> words, NetworkParameters netParams) {
+    public static DeterministicKey derivedXPrivKey(byte[] seed, NetworkParameters netParams) {
         return
                 derivedXPrivKey(
-                        HDKeyDerivation.createMasterPrivateKey(
-                                MnemonicCode.toSeed(
-                                        words,
-                                        "")),
+                        HDKeyDerivation.createMasterPrivateKey(seed),
                         netParams);
     }
 
-    public static DeterministicKey requestDerivation(List<String> words) {
+    public static DeterministicKey requestDerivation(byte[] seed) {
         return
                 HDKeyDerivation.deriveChildKey(
-                        HDKeyDerivation.createMasterPrivateKey(
-                                MnemonicCode.toSeed(
-                                        words,
-                                        ""))
+                        HDKeyDerivation.createMasterPrivateKey(seed)
                                 .derive(1),
                         new ChildNumber(0, false));
     }

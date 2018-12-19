@@ -34,6 +34,7 @@
 package org.openkuva.kuvabase.bwcj.domain.useCases.wallet.recoveryWalletFromMnemonic;
 
 import org.bitcoinj.core.ECKey;
+import org.bitcoinj.crypto.MnemonicCode;
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.credentials.ICredentials;
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.wallet.IWallet;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.IBitcoreWalletServerAPI;
@@ -54,8 +55,8 @@ public class RecoveryWalletFromMnemonicUseCase implements IRecoveryWalletFromMne
     }
 
     @Override
-    public IWallet execute(List<String> mnemonic, ECKey walletPrivateKey) throws CopayerNotFoundException {
-        credentials.setSeedWords(mnemonic);
+    public IWallet execute(List<String> mnemonic, String passphrase, ECKey walletPrivateKey) throws CopayerNotFoundException {
+        credentials.setSeed(MnemonicCode.toSeed(mnemonic, passphrase));
         credentials.setWalletPrivateKey(walletPrivateKey);
 
         return bwsApi.getWallets(getUrlOptions());

@@ -39,6 +39,12 @@ import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.core.Utils;
 import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.crypto.TransactionSignature;
+import org.openkuva.kuvabase.bwcj.data.entity.interfaces.credentials.ICredentials;
+import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.IInput;
+import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ITransactionProposal;
+import org.openkuva.kuvabase.bwcj.domain.utils.CopayersCryptUtils;
+import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.IBitcoreWalletServerAPI;
+import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.pojo.signatures.SignatureRequest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,15 +54,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.openkuva.kuvabase.bwcj.data.entity.interfaces.credentials.ICredentials;
-import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.IInput;
-import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ITransactionProposal;
-import org.openkuva.kuvabase.bwcj.domain.utils.CopayersCryptUtils;
-import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.IBitcoreWalletServerAPI;
-import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.pojo.signatures.SignatureRequest;
-
-import static org.openkuva.kuvabase.bwcj.domain.utils.transactions.CopayTransactionUtils.buildTx;
 import static org.openkuva.kuvabase.bwcj.domain.utils.DeriveUtils.deriveChildByPath;
+import static org.openkuva.kuvabase.bwcj.domain.utils.transactions.CopayTransactionUtils.buildTx;
 
 public class SignTxpUseCase implements ISignTxpUseCase {
     private final IBitcoreWalletServerAPI bwsApi;
@@ -71,7 +70,7 @@ public class SignTxpUseCase implements ISignTxpUseCase {
     public ITransactionProposal execute(ITransactionProposal txToSign) {
         DeterministicKey xpriv =
                 CopayersCryptUtils.derivedXPrivKey(
-                        credentials.getSeedWords(),
+                        credentials.getSeed(),
                         credentials.getNetworkParameters());
 
         Map<String, DeterministicKey> derived = new HashMap<>();

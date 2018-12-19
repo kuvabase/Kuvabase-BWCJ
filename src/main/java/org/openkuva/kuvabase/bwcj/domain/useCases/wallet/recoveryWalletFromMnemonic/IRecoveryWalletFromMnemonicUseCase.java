@@ -40,5 +40,5 @@ import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.except
 import java.util.List;
 
 public interface IRecoveryWalletFromMnemonicUseCase {
-    IWallet execute(List<String> mnemonic, ECKey walletPrivateKey) throws CopayerNotFoundException;
+    IWallet execute(List<String> mnemonic, String passphrase, ECKey walletPrivateKey) throws CopayerNotFoundException;
 }
