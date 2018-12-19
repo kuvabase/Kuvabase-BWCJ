@@ -42,4 +42,6 @@ public interface IInitializeCredentialsUseCase {
      * @return mnemonic code
      */
     List<String> execute(String passphrase);
+
+    void execute(List<String> mnemonic, String passphrase);
 }

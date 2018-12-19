@@ -64,4 +64,17 @@ public class InitializeCredentialsWithRandomValueUseCase implements IInitializeC
 
         return Collections.unmodifiableList(deterministicSeed.getMnemonicCode());
     }
+
+    @Override
+    public void execute(List<String> mnemonic, String passphrase) {
+        DeterministicSeed deterministicSeed =
+                new DeterministicSeed(
+                        mnemonic,
+                        null,
+                        passphrase,
+                        Utils.currentTimeSeconds());
+
+        credentials.setSeed(deterministicSeed.getSeedBytes());
+        credentials.setWalletPrivateKey(new ECKey());
+    }
 }
