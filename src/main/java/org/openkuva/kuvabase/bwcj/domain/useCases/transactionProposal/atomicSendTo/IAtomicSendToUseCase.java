@@ -34,6 +34,7 @@
 package org.openkuva.kuvabase.bwcj.domain.useCases.transactionProposal.atomicSendTo;
 
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ICustomData;
+import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.IOutput;
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ITransactionProposal;
 
 public interface IAtomicSendToUseCase {
@@ -46,6 +47,12 @@ public interface IAtomicSendToUseCase {
     ITransactionProposal execute(
             String address,
             String dash,
+            String msg,
+            String operation,
+            ICustomData customData);
+
+    ITransactionProposal execute(
+            IOutput[] outputs,
             String msg,
             String operation,
             ICustomData customData);

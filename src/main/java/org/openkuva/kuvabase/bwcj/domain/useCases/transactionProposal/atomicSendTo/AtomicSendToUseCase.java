@@ -33,8 +33,11 @@
 
 package org.openkuva.kuvabase.bwcj.domain.useCases.transactionProposal.atomicSendTo;
 
+import org.bitcoinj.core.Coin;
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ICustomData;
+import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.IOutput;
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ITransactionProposal;
+import org.openkuva.kuvabase.bwcj.data.entity.pojo.transaction.Output;
 import org.openkuva.kuvabase.bwcj.domain.useCases.transactionProposal.addNewTxp.IAddNewTxpUseCase;
 import org.openkuva.kuvabase.bwcj.domain.useCases.transactionProposal.broadcastTxp.IBroadcastTxpUseCase;
 import org.openkuva.kuvabase.bwcj.domain.useCases.transactionProposal.deletePendingTxp.IDeletePendingTxpUseCase;
@@ -69,12 +72,24 @@ public class AtomicSendToUseCase implements IAtomicSendToUseCase {
 
     @Override
     public ITransactionProposal execute(String address, String dash, String msg, String operation, ICustomData customData) {
+        return execute(
+                new IOutput[]{
+                        new Output(
+                                address,
+                                Coin.parseCoin(dash).value,
+                                null)},
+                msg,
+                operation,
+                customData);
+    }
+
+    @Override
+    public ITransactionProposal execute(IOutput[] outputs, String msg, String operation, ICustomData customData) {
         String txId = null;
         try {
             ITransactionProposal txToPublish =
                     addNewTxpUseCases.execute(
-                            address,
-                            dash,
+                            outputs,
                             msg,
                             false,
                             operation,

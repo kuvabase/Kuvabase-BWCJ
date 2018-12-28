@@ -58,14 +58,24 @@ public class AddNewTxpUseCase implements IAddNewTxpUseCase {
 
     @Override
     public ITransactionProposal execute(String address, String dash, String msg, boolean dryRun, String operation, ICustomData customData) throws InsufficientFundsException, InvalidWalletAddressException, InvalidAmountException {
+        return execute(
+                new IOutput[]{
+                        new Output(
+                                address,
+                                Coin.parseCoin(dash).value,
+                                null)},
+                msg,
+                dryRun,
+                operation,
+                customData);
+    }
+
+    @Override
+    public ITransactionProposal execute(IOutput[] outputs, String msg, boolean dryRun, String operation, ICustomData customData) {
         return
                 bwsApi.postTxProposals(
                         new TransactionRequest(
-                                new IOutput[]{
-                                        new Output(
-                                                address,
-                                                Coin.parseCoin(dash).value,
-                                                null)},
+                                outputs,
                                 "normal",
                                 msg,
                                 false,
@@ -73,6 +83,5 @@ public class AddNewTxpUseCase implements IAddNewTxpUseCase {
                                 operation,
                                 customData,
                                 null));
-
     }
 }
