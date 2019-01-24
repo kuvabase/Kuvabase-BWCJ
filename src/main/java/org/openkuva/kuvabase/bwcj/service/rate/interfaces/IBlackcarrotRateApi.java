@@ -46,4 +46,14 @@ public interface IBlackcarrotRateApi {
      * @GET("USD_DASH.json")
      */
     IRateResponse getDASHRate();
+
+    /**
+     * @GET("GBP_USD.json")
+     */
+    IRateResponse getGBPToUSDRate();
+
+    /**
+     * @GET("USD_GBP.json")
+     */
+    IRateResponse getUSDToGBPRate();
 }

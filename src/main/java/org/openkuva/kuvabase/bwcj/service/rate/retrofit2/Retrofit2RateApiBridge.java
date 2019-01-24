@@ -84,4 +84,40 @@ public class Retrofit2RateApiBridge implements IBlackcarrotRateApi {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public IRateResponse getGBPToUSDRate() {
+        try {
+            Response<GsonRateResponse> response = rateAPI
+                    .getGBPToUSDRate()
+                    .execute();
+
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                throw new RequestFailedException(response);
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public IRateResponse getUSDToGBPRate() {
+        try {
+            Response<GsonRateResponse> response = rateAPI
+                    .getUSDToGBPRate()
+                    .execute();
+
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                throw new RequestFailedException(response);
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

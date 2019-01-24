@@ -37,7 +37,9 @@ import org.openkuva.kuvabase.bwcj.data.repository.interfaces.rate.IRateRepositor
 import org.openkuva.kuvabase.bwcj.service.rate.interfaces.IBlackcarrotRateApi;
 
 import static org.openkuva.kuvabase.bwcj.data.repository.pojo.rate.QuoteType.DASH_USD;
+import static org.openkuva.kuvabase.bwcj.data.repository.pojo.rate.QuoteType.GBP_USD;
 import static org.openkuva.kuvabase.bwcj.data.repository.pojo.rate.QuoteType.USD_DASH;
+import static org.openkuva.kuvabase.bwcj.data.repository.pojo.rate.QuoteType.USD_GBP;
 import static org.openkuva.kuvabase.bwcj.data.repository.pojo.rate.QuoteType.USD_USD;
 
 public class RealTimeRateRepository implements IRateRepository {
@@ -62,6 +64,18 @@ public class RealTimeRateRepository implements IRateRepository {
                     Double.parseDouble(
                             service
                                     .getDASHRate()
+                                    .getRate());
+        } else if (quote.equals(GBP_USD)) {
+            return
+                    Double.parseDouble(
+                            service
+                                    .getGBPToUSDRate()
+                                    .getRate());
+        } else if (quote.equals(USD_GBP)) {
+            return
+                    Double.parseDouble(
+                            service
+                                    .getUSDToGBPRate()
                                     .getRate());
         } else {
             throw new IllegalArgumentException("quote = " + quote);

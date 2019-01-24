@@ -37,6 +37,8 @@ public final class QuoteType {
     public static final String USD_USD = "USD_USD";
     public static final String DASH_USD = "DASH_USD";
     public static final String USD_DASH = "USD_DASH";
+    public static final String GBP_USD = "GBP_USD";
+    public static final String USD_GBP = "USD_GBP";
 
     private QuoteType() {
     }

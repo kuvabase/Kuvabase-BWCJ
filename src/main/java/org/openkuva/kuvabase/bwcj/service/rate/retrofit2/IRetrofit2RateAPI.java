@@ -45,4 +45,10 @@ public interface IRetrofit2RateAPI {
 
     @GET("USD_DASH.json")
     Call<GsonRateResponse> getDASHRate();
+
+    @GET("GBP_USD.json")
+    Call<GsonRateResponse> getGBPToUSDRate();
+
+    @GET("USD_GBP.json")
+    Call<GsonRateResponse> getUSDToGBPRate();
 }
