@@ -60,6 +60,11 @@ public class CreateWalletUseCase implements ICreateWalletUseCase {
 
     @Override
     public String execute() {
+        return execute(DEFAULT_SINGLE_ADDRESS);
+    }
+
+    @Override
+    public String execute(boolean singleAddress) {
         return
                 bwsApi.postWallets(
                         new CreateWalletRequest(
@@ -78,7 +83,8 @@ public class CreateWalletUseCase implements ICreateWalletUseCase {
                                 credentials
                                         .getWalletPrivateKey()
                                         .getPublicKeyAsHex(),
-                                DEFAULT_SINGLE_ADDRESS))
+                                singleAddress))
                         .getWalletID();
+
     }
 }

@@ -115,6 +115,24 @@ public class Retrofit2BwsApiBridge implements IBitcoreWalletServerAPI {
     }
 
     @Override
+    public IAddressesResponse[] getAddresses() {
+        try {
+            Response<GsonAddressesResponse[]> response = serverAPI
+                    .getAddresses()
+                    .execute();
+
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                throw new RequestFailedException(response);
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public IJoinWalletResponse postWalletsWalletIdCopayers(String walletId, IJoinWalletRequest createCopayerRequest) {
         try {
             Response<GsonJoinWalletResponse> response = serverAPI
