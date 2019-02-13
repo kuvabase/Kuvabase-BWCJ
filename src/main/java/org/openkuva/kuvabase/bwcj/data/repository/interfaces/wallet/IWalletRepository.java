@@ -44,5 +44,7 @@ public interface IWalletRepository {
 
     List<IWallet> getAll();
 
+    boolean hasData();
+
     void clear();
 }

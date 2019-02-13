@@ -69,6 +69,13 @@ public class SyncObservableWalletRepository implements IObservableWalletReposito
     }
 
     @Override
+    public boolean hasData() {
+        synchronized (syncObject) {
+            return origin.hasData();
+        }
+    }
+
+    @Override
     public void clear() {
         synchronized (syncObject) {
             origin.clear();

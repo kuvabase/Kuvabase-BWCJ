@@ -61,6 +61,11 @@ public class RetrievableObservableWalletRepository implements IObservableWalletR
     }
 
     @Override
+    public boolean hasData() {
+        return origin.hasData();
+    }
+
+    @Override
     public void clear() {
         origin.clear();
     }

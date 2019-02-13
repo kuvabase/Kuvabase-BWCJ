@@ -61,6 +61,11 @@ public class InMemoryWalletRepository implements IWalletRepository {
     }
 
     @Override
+    public boolean hasData() {
+        return !MAP.isEmpty();
+    }
+
+    @Override
     public void clear() {
         MAP.clear();
     }
