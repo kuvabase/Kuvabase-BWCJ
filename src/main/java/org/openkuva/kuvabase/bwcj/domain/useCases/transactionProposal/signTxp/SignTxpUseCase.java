@@ -43,6 +43,7 @@ import org.openkuva.kuvabase.bwcj.data.entity.interfaces.credentials.ICredential
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.IInput;
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ITransactionProposal;
 import org.openkuva.kuvabase.bwcj.domain.utils.CopayersCryptUtils;
+import org.openkuva.kuvabase.bwcj.domain.utils.transactions.TransactionBuilder;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.IBitcoreWalletServerAPI;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.pojo.signatures.SignatureRequest;
 
@@ -55,15 +56,16 @@ import java.util.List;
 import java.util.Map;
 
 import static org.openkuva.kuvabase.bwcj.domain.utils.DeriveUtils.deriveChildByPath;
-import static org.openkuva.kuvabase.bwcj.domain.utils.transactions.CopayTransactionUtils.buildTx;
 
 public class SignTxpUseCase implements ISignTxpUseCase {
     private final IBitcoreWalletServerAPI bwsApi;
     private final ICredentials credentials;
+    private final TransactionBuilder transactionBuilder;
 
-    public SignTxpUseCase(IBitcoreWalletServerAPI bwsApi, ICredentials credentials) {
+    public SignTxpUseCase(IBitcoreWalletServerAPI bwsApi, ICredentials credentials, TransactionBuilder transactionBuilder) {
         this.bwsApi = bwsApi;
         this.credentials = credentials;
+        this.transactionBuilder = transactionBuilder;
     }
 
     @Override
@@ -84,7 +86,7 @@ public class SignTxpUseCase implements ISignTxpUseCase {
             }
         }
 
-        Transaction transaction = buildTx(txToSign);
+        Transaction transaction = transactionBuilder.buildTx(txToSign);
         List<List<IndexedTransactionSignature>> signaturesLists = new ArrayList<>();
         for (int i = 0; i < privs.size(); i++) {
             signaturesLists.add(
