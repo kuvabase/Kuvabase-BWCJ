@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  2018 One Kuva LLC, known as OpenKuva.org
+ * Copyright (c)  2019 One Kuva LLC, known as OpenKuva.org
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -13,7 +13,7 @@
  *      notice, this list of conditions and the following disclaimer in the
  *      documentation and/or other materials provided with the distribution.
  *
- *      * Neither the name of the One Kuva LLC, known as OpenKuva.org nor the names of its
+ *      * Neither the name of the copyright holder nor the names of its
  *      contributors may be used to endorse or promote products derived from this
  *      software without specific prior written permission.
  *
@@ -31,32 +31,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.address;
+package org.openkuva.kuvabase.bwcj.domain.utils;
 
-import java.util.List;
+import org.bitcoinj.core.NetworkParameters;
 
-public interface IAddressesResponse {
-    boolean hasActivity();
+public class CommonNetworkParametersBuilder implements INetworkParametersBuilder {
 
-    String getAddress();
-
-    String getCoin();
-
-    String getCreatedOn();
-
-    boolean isChange();
-
-    String getNetwork();
-
-    String getPath();
-
-    List<String> getPublicKeys();
-
-    String getType();
-
-    String getVersion();
-
-    String getWalletId();
-
-    String get_id();
+    @Override
+    public NetworkParameters fromID(String id) {
+        return NetworkParameters.fromID(id);
+    }
 }

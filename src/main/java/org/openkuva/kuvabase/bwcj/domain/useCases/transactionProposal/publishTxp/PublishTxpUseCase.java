@@ -34,22 +34,23 @@
 package org.openkuva.kuvabase.bwcj.domain.useCases.transactionProposal.publishTxp;
 
 import org.bitcoinj.core.Utils;
-
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.credentials.ICredentials;
-import org.openkuva.kuvabase.bwcj.domain.utils.CopayersCryptUtils;
-import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.IBitcoreWalletServerAPI;
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ITransactionProposal;
+import org.openkuva.kuvabase.bwcj.domain.utils.CopayersCryptUtils;
+import org.openkuva.kuvabase.bwcj.domain.utils.transactions.TransactionBuilder;
+import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.IBitcoreWalletServerAPI;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.pojo.publish.PublishRequest;
 
-import static org.openkuva.kuvabase.bwcj.domain.utils.transactions.CopayTransactionUtils.buildTx;
 
 public class PublishTxpUseCase implements IPublishTxpUseCase {
     private final IBitcoreWalletServerAPI bwsApi;
     private final ICredentials credentials;
+    private final TransactionBuilder transactionBuilder;
 
-    public PublishTxpUseCase(IBitcoreWalletServerAPI bwsApi, ICredentials credentials) {
+    public PublishTxpUseCase(IBitcoreWalletServerAPI bwsApi, ICredentials credentials, TransactionBuilder transactionBuilder) {
         this.bwsApi = bwsApi;
         this.credentials = credentials;
+        this.transactionBuilder = transactionBuilder;
     }
 
     @Override
@@ -60,7 +61,7 @@ public class PublishTxpUseCase implements IPublishTxpUseCase {
                         new PublishRequest(
                                 CopayersCryptUtils.signMessage(
                                         Utils.HEX.encode(
-                                                buildTx(toPublish).unsafeBitcoinSerialize()),
+                                                transactionBuilder.buildTx(toPublish).unsafeBitcoinSerialize()),
                                         CopayersCryptUtils.requestDerivation(
                                                 credentials.getSeed())
                                                 .getPrivateKeyAsHex())));

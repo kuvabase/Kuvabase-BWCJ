@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  2018 One Kuva LLC, known as OpenKuva.org
+ * Copyright (c)  2019 One Kuva LLC, known as OpenKuva.org
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -13,7 +13,7 @@
  *      notice, this list of conditions and the following disclaimer in the
  *      documentation and/or other materials provided with the distribution.
  *
- *      * Neither the name of the One Kuva LLC, known as OpenKuva.org nor the names of its
+ *      * Neither the name of the copyright holder nor the names of its
  *      contributors may be used to endorse or promote products derived from this
  *      software without specific prior written permission.
  *
@@ -44,37 +44,24 @@ import org.bitcoinj.core.UTXO;
 import org.bitcoinj.core.Utils;
 import org.bitcoinj.script.Script;
 import org.bitcoinj.script.ScriptBuilder;
-
-import java.util.List;
-
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.IInput;
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.IOutput;
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ITransactionProposal;
+import org.openkuva.kuvabase.bwcj.domain.utils.INetworkParametersBuilder;
+
+import java.util.List;
 
 import static org.openkuva.kuvabase.bwcj.domain.utils.NetworkParametersUtils.toId;
-import static org.bitcoinj.core.NetworkParameters.fromID;
 
-public final class CopayTransactionUtils {
-    private CopayTransactionUtils() {
+public class TransactionBuilder {
+    private final INetworkParametersBuilder networkParametersBuilder;
+
+    public TransactionBuilder(INetworkParametersBuilder networkParametersBuilder) {
+        this.networkParametersBuilder = networkParametersBuilder;
     }
 
-    public static Transaction sort(Transaction transaction, List<Integer> outputOrder) {
-        Transaction result = new Transaction(transaction.getParams());
-        for (TransactionInput input : transaction.getInputs()) {
-            result.addInput(input);
-        }
-
-        for (Integer integer : outputOrder) {
-            if (integer < transaction.getOutputs().size()) {
-                result.addOutput(transaction.getOutput(integer));
-            }
-        }
-
-        return result;
-    }
-
-    public static Transaction buildTx(ITransactionProposal tp) {
-        NetworkParameters network = fromID(toId(tp.getNetwork()));
+    public Transaction buildTx(ITransactionProposal tp) {
+        NetworkParameters network = networkParametersBuilder.fromID(toId(tp.getNetwork()));
 
         Transaction transaction = new Transaction(network);
 
@@ -129,6 +116,21 @@ public final class CopayTransactionUtils {
             transaction.addOutput(changeAmount, changeScript);
         }
 
-        return CopayTransactionUtils.sort(transaction, tp.getOutputOrder());
+        return sort(transaction, tp.getOutputOrder());
     }
+    public static Transaction sort(Transaction transaction, List<Integer> outputOrder) {
+        Transaction result = new Transaction(transaction.getParams());
+        for (TransactionInput input : transaction.getInputs()) {
+            result.addInput(input);
+        }
+
+        for (Integer integer : outputOrder) {
+            if (integer < transaction.getOutputs().size()) {
+                result.addOutput(transaction.getOutput(integer));
+            }
+        }
+
+        return result;
+    }
+
 }

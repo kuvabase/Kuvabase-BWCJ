@@ -35,9 +35,9 @@ package org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.retrofit2.gson.a
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.address.IAddressesResponse;
+
+import java.util.List;
 
 public class GsonAddressesResponse implements IAddressesResponse {
     @SerializedName("address")
@@ -73,6 +73,9 @@ public class GsonAddressesResponse implements IAddressesResponse {
     @SerializedName("_id")
     String _id;
 
+    @SerializedName("hasActivity")
+    boolean hasActivity;
+
     public GsonAddressesResponse(String address,
                                  String coin,
                                  String createdOn,
@@ -83,7 +86,8 @@ public class GsonAddressesResponse implements IAddressesResponse {
                                  String type,
                                  String version,
                                  String walletId,
-                                 String _id) {
+                                 String _id,
+                                 boolean hasActivity) {
 
         this.address = address;
         this.coin = coin;
@@ -96,6 +100,12 @@ public class GsonAddressesResponse implements IAddressesResponse {
         this.version = version;
         this.walletId = walletId;
         this._id = _id;
+        this.hasActivity = hasActivity;
+    }
+
+    @Override
+    public boolean hasActivity() {
+        return hasActivity;
     }
 
     @Override

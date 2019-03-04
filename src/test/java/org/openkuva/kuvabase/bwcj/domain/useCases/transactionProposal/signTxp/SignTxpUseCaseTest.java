@@ -47,6 +47,8 @@ import org.mockito.MockitoAnnotations;
 
 import org.openkuva.kuvabase.bwcj.data.entity.gson.transaction.GsonTransactionProposal;
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.credentials.ICredentials;
+import org.openkuva.kuvabase.bwcj.domain.utils.CommonNetworkParametersBuilder;
+import org.openkuva.kuvabase.bwcj.domain.utils.transactions.TransactionBuilder;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.IBitcoreWalletServerAPI;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.signatures.ISignatureRequest;
 
@@ -74,7 +76,7 @@ public class SignTxpUseCaseTest {
         Mockito.when(credentials.getSeed()).thenReturn(MnemonicCode.toSeed(split("faith space neutral exhaust worth amused average skull differ track best obey"), ""));
         Mockito.when(credentials.getNetworkParameters()).thenReturn(TestNet3Params.get());
 
-        signTxpUseCase = new SignTxpUseCase(bwsApi, credentials);
+        signTxpUseCase = new SignTxpUseCase(bwsApi, credentials, new TransactionBuilder(new CommonNetworkParametersBuilder()));
     }
 
     @Test

@@ -68,6 +68,11 @@ public interface IBitcoreWalletServerAPI {
     IAddressesResponse postAddresses(AddressesRequest addressesRequest);
 
     /**
+     * GET v1/addresses/
+     */
+    IAddressesResponse[] getAddresses();
+
+    /**
      * POST v2/wallets/{wallet_id}/copayers
      */
     IJoinWalletResponse postWalletsWalletIdCopayers(String walletId, IJoinWalletRequest createCopayerRequest);
