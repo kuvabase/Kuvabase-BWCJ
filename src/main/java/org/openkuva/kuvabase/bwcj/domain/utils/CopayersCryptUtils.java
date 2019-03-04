@@ -186,7 +186,7 @@ public final class CopayersCryptUtils {
         return
                 network
                         .getId()
-                        .contains("test") ? 1 : 0;
+                        .contains("test") ? 1 : 5;
     }
 
     public static String xPubKey(DeterministicKey derivedXPrivKey, NetworkParameters netParams) {
