@@ -40,14 +40,14 @@ import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ITransactio
 public interface IAddNewTxpUseCase {
     ITransactionProposal execute(
             String address,
-            String dash,
+            long satoshis,
             String msg,
             boolean dryRun,
             ICustomData customData);
 
     ITransactionProposal execute(
             String address,
-            String dash,
+            long satoshis,
             String msg,
             boolean dryRun,
             String operation,

@@ -40,13 +40,13 @@ import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ITransactio
 public interface IAtomicSendToUseCase {
     ITransactionProposal execute(
             String address,
-            String dash,
+            long satoshis,
             String msg,
             ICustomData send);
 
     ITransactionProposal execute(
             String address,
-            String dash,
+            long dash,
             String msg,
             String operation,
             ICustomData customData);

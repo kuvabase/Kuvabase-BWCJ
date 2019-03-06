@@ -33,7 +33,6 @@
 
 package org.openkuva.kuvabase.bwcj.domain.useCases.transactionProposal.atomicSendTo;
 
-import org.bitcoinj.core.Coin;
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ICustomData;
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.IOutput;
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ITransactionProposal;
@@ -66,17 +65,17 @@ public class AtomicSendToUseCase implements IAtomicSendToUseCase {
     }
 
     @Override
-    public ITransactionProposal execute(String address, String dash, String msg, ICustomData customData) {
-        return execute(address, dash, msg, "send", customData);
+    public ITransactionProposal execute(String address, long satoshis, String msg, ICustomData customData) {
+        return execute(address, satoshis, msg, "send", customData);
     }
 
     @Override
-    public ITransactionProposal execute(String address, String dash, String msg, String operation, ICustomData customData) {
+    public ITransactionProposal execute(String address, long satoshis, String msg, String operation, ICustomData customData) {
         return execute(
                 new IOutput[]{
                         new Output(
                                 address,
-                                Coin.parseCoin(dash).value,
+                                satoshis,
                                 null)},
                 msg,
                 operation,
