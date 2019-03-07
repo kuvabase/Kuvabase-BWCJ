@@ -34,6 +34,7 @@
 package org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.retrofit2.interceptors;
 
 import org.openkuva.kuvabase.bwcj.data.entity.interfaces.credentials.ICredentials;
+import org.openkuva.kuvabase.bwcj.domain.utils.CopayersCryptUtils;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -44,17 +45,16 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okio.Buffer;
 
-import static org.openkuva.kuvabase.bwcj.domain.utils.CopayersCryptUtils.copayerId;
-import static org.openkuva.kuvabase.bwcj.domain.utils.CopayersCryptUtils.requestDerivation;
-import static org.openkuva.kuvabase.bwcj.domain.utils.CopayersCryptUtils.signMessage;
 import static org.openkuva.kuvabase.bwcj.domain.utils.ListUtils.join;
 
 public class BWCRequestSignatureInterceptor implements Interceptor {
     private final ICredentials credentials;
+    private final CopayersCryptUtils copayersCryptUtils;
     private final String urlBws;
 
-    public BWCRequestSignatureInterceptor(ICredentials credentials, String url) {
+    public BWCRequestSignatureInterceptor(ICredentials credentials, CopayersCryptUtils copayersCryptUtils, String url) {
         this.credentials = credentials;
+        this.copayersCryptUtils = copayersCryptUtils;
         this.urlBws = url;
     }
 
@@ -66,7 +66,7 @@ public class BWCRequestSignatureInterceptor implements Interceptor {
                         .newBuilder()
                         .addHeader(
                                 "x-identity",
-                                copayerId(
+                                copayersCryptUtils.copayerId(
                                         credentials.getSeed(),
                                         credentials.getNetworkParameters()))
                         .addHeader("x-signature",
@@ -74,7 +74,7 @@ public class BWCRequestSignatureInterceptor implements Interceptor {
                                         oldReq.method().toLowerCase(),
                                         extractUrl(oldReq.url().toString()),
                                         bodyToString(oldReq.body()),
-                                        requestDerivation(
+                                        copayersCryptUtils.requestDerivation(
                                                 credentials.getSeed())
                                                 .getPrivateKeyAsHex()))
                         .build();
@@ -99,9 +99,9 @@ public class BWCRequestSignatureInterceptor implements Interceptor {
         }
     }
 
-    private static String signRequest(String method, String url, String arg, String key) {
+    private String signRequest(String method, String url, String arg, String key) {
         return
-                signMessage(
+                copayersCryptUtils.signMessage(
                         join(
                                 Arrays.asList(
                                         method,

@@ -56,10 +56,14 @@ import static org.bitcoinj.core.Utils.HEX;
 import static org.openkuva.kuvabase.bwcj.domain.utils.ListUtils.join;
 
 public final class CopayersCryptUtils {
-    private CopayersCryptUtils() {
+
+    private final ICoinTypeRetriever coinTypeRetriever;
+
+    public CopayersCryptUtils(ICoinTypeRetriever coinTypeRetriever) {
+        this.coinTypeRetriever = coinTypeRetriever;
     }
 
-    public static String copayerId(byte[] seed, NetworkParameters netParams) {
+    public String copayerId(byte[] seed, NetworkParameters netParams) {
         return
                 xPubToCopayerId(
                         xPubKey(
@@ -67,14 +71,14 @@ public final class CopayersCryptUtils {
                                 netParams));
     }
 
-    public static DeterministicKey derivedXPrivKey(byte[] seed, NetworkParameters netParams) {
+    public DeterministicKey derivedXPrivKey(byte[] seed, NetworkParameters netParams) {
         return
                 derivedXPrivKey(
                         HDKeyDerivation.createMasterPrivateKey(seed),
                         netParams);
     }
 
-    public static DeterministicKey requestDerivation(byte[] seed) {
+    public DeterministicKey requestDerivation(byte[] seed) {
         return
                 HDKeyDerivation.deriveChildKey(
                         HDKeyDerivation.createMasterPrivateKey(seed)
@@ -82,7 +86,7 @@ public final class CopayersCryptUtils {
                         new ChildNumber(0, false));
     }
 
-    public static String signMessage(String message, String privKey) {
+    public String signMessage(String message, String privKey) {
         return
                 Utils.HEX.encode(
                         ECKey.fromPrivate(
@@ -93,7 +97,7 @@ public final class CopayersCryptUtils {
                                 .encodeToDER());
     }
 
-    public static String entropySource(DeterministicKey requestDerivation) {
+    public String entropySource(DeterministicKey requestDerivation) {
         return
                 HEX.encode(
                         Sha256Hash.hash(
@@ -101,7 +105,7 @@ public final class CopayersCryptUtils {
                                         requestDerivation.getPrivateKeyAsHex())));
     }
 
-    public static String xPubToCopayerId(String xpub) {
+    public String xPubToCopayerId(String xpub) {
         try {
             String shaHex = "";
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -116,7 +120,7 @@ public final class CopayersCryptUtils {
         }
     }
 
-    public static String personalEncryptingKey(String entropySource) {
+    public String personalEncryptingKey(String entropySource) {
         try {
             String prefix = "personalKey";
 
@@ -133,7 +137,7 @@ public final class CopayersCryptUtils {
         }
     }
 
-    public static byte[] sha256hmac(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeyException {
+    public byte[] sha256hmac(byte[] data, byte[] key) throws NoSuchAlgorithmException, InvalidKeyException {
         Mac sha512Hmac = Mac.getInstance("HmacSHA256");
 
         sha512Hmac.init(
@@ -147,11 +151,11 @@ public final class CopayersCryptUtils {
 
     }
 
-    public static String getCopayerHash(String encCopayerName, String xPubKey, String requestPubKey) {
+    public String getCopayerHash(String encCopayerName, String xPubKey, String requestPubKey) {
         return join(Arrays.asList(encCopayerName, xPubKey, requestPubKey), "|");
     }
 
-    public static String signRequest(String method, String url, Object arg, String key) {
+    public String signRequest(String method, String url, Object arg, String key) {
         return
                 signMessage(
                         join(
@@ -166,7 +170,7 @@ public final class CopayersCryptUtils {
                         key);
     }
 
-    public static String sharedEncryptingKey(String walletPrivKey) {
+    public String sharedEncryptingKey(String walletPrivKey) {
         byte[] hash =
                 Sha256Hash.hash(
                         HEX.decode(walletPrivKey));
@@ -175,21 +179,18 @@ public final class CopayersCryptUtils {
         return Base58.encode(bytes); //todo use Base58 instead of standard base-64 to quip resolve dependencies issue in Android, possible can be bug
     }
 
-    public static DeterministicKey derivedXPrivKey(DeterministicKey masterPrivateKey, NetworkParameters netParams) {
+    public DeterministicKey derivedXPrivKey(DeterministicKey masterPrivateKey, NetworkParameters netParams) {
         return masterPrivateKey
                 .derive(44)
                 .derive(getCoinFromNetwork(netParams))
                 .derive(0);
     }
 
-    private static int getCoinFromNetwork(NetworkParameters network) {
-        return
-                network
-                        .getId()
-                        .contains("test") ? 1 : 5;
+    private int getCoinFromNetwork(NetworkParameters network) {
+        return coinTypeRetriever.fromParams(network);
     }
 
-    public static String xPubKey(DeterministicKey derivedXPrivKey, NetworkParameters netParams) {
+    public String xPubKey(DeterministicKey derivedXPrivKey, NetworkParameters netParams) {
         return derivedXPrivKey.serializePubB58(netParams);
     }
 }

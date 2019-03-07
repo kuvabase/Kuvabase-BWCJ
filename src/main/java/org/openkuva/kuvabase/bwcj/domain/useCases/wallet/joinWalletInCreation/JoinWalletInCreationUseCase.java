@@ -49,10 +49,12 @@ public class JoinWalletInCreationUseCase implements IJoinWalletInCreationUseCase
 
     private final ICredentials credentials;
     private final IBitcoreWalletServerAPI bwsApi;
+    private final CopayersCryptUtils copayersCryptUtils;
 
-    public JoinWalletInCreationUseCase(ICredentials credentials, IBitcoreWalletServerAPI bwsApi) {
+    public JoinWalletInCreationUseCase(ICredentials credentials, IBitcoreWalletServerAPI bwsApi, CopayersCryptUtils copayersCryptUtils) {
         this.credentials = credentials;
         this.bwsApi = bwsApi;
+        this.copayersCryptUtils = copayersCryptUtils;
     }
 
     @Override
@@ -60,20 +62,20 @@ public class JoinWalletInCreationUseCase implements IJoinWalletInCreationUseCase
         ECKey walletPrivKey =
                 credentials.getWalletPrivateKey();
         String xPubKey =
-                CopayersCryptUtils.derivedXPrivKey(
+                copayersCryptUtils.derivedXPrivKey(
                         credentials.getSeed(),
                         credentials.getNetworkParameters())
                         .serializePubB58(credentials.getNetworkParameters());
 
         String requestPubKey =
-                CopayersCryptUtils.requestDerivation(
+                copayersCryptUtils.requestDerivation(
                         credentials.getSeed())
                         .getPublicKeyAsHex();
 
         String personalEncryptingKey =
-                CopayersCryptUtils.personalEncryptingKey(
-                        CopayersCryptUtils.entropySource(
-                                CopayersCryptUtils.requestDerivation(
+                copayersCryptUtils.personalEncryptingKey(
+                        copayersCryptUtils.entropySource(
+                                copayersCryptUtils.requestDerivation(
                                         credentials.getSeed())));
 
         String encCustomData =
@@ -91,16 +93,16 @@ public class JoinWalletInCreationUseCase implements IJoinWalletInCreationUseCase
                 new SjclMessageEncryptor()
                         .encrypt(
                                 "me",
-                                CopayersCryptUtils.sharedEncryptingKey(
+                                copayersCryptUtils.sharedEncryptingKey(
                                         walletPrivKey.getPrivateKeyAsHex()));
 
         String hash =
-                CopayersCryptUtils.getCopayerHash(
+                copayersCryptUtils.getCopayerHash(
                         encCopayerName,
                         xPubKey,
                         requestPubKey);
 
-        String copayerSignature = CopayersCryptUtils.signMessage(hash, walletPrivKey.getPrivateKeyAsHex());
+        String copayerSignature = copayersCryptUtils.signMessage(hash, walletPrivKey.getPrivateKeyAsHex());
 
         IJoinWalletRequest joinWalletRequest =
                 new JoinWalletRequest(

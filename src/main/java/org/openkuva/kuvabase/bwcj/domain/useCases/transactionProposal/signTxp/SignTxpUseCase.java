@@ -61,17 +61,19 @@ public class SignTxpUseCase implements ISignTxpUseCase {
     private final IBitcoreWalletServerAPI bwsApi;
     private final ICredentials credentials;
     private final TransactionBuilder transactionBuilder;
+    private final CopayersCryptUtils copayersCryptUtils;
 
-    public SignTxpUseCase(IBitcoreWalletServerAPI bwsApi, ICredentials credentials, TransactionBuilder transactionBuilder) {
+    public SignTxpUseCase(IBitcoreWalletServerAPI bwsApi, ICredentials credentials, TransactionBuilder transactionBuilder, CopayersCryptUtils copayersCryptUtils) {
         this.bwsApi = bwsApi;
         this.credentials = credentials;
         this.transactionBuilder = transactionBuilder;
+        this.copayersCryptUtils = copayersCryptUtils;
     }
 
     @Override
     public ITransactionProposal execute(ITransactionProposal txToSign) {
         DeterministicKey xpriv =
-                CopayersCryptUtils.derivedXPrivKey(
+                copayersCryptUtils.derivedXPrivKey(
                         credentials.getSeed(),
                         credentials.getNetworkParameters());
 

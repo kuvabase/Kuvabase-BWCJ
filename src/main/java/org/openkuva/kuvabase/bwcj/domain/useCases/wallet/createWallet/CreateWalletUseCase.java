@@ -43,6 +43,7 @@ import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.pojo.wallets.Crea
 public class CreateWalletUseCase implements ICreateWalletUseCase {
 
     private final ICredentials credentials;
+    private final CopayersCryptUtils copayersCryptUtils;
     private final IBitcoreWalletServerAPI bwsApi;
 
     private final String DEFAULT_WALLET_NAME = "Personal Wallet";
@@ -52,9 +53,11 @@ public class CreateWalletUseCase implements ICreateWalletUseCase {
 
     public CreateWalletUseCase(
             ICredentials credentials,
+            CopayersCryptUtils copayersCryptUtils,
             IBitcoreWalletServerAPI bwsApi) {
 
         this.credentials = credentials;
+        this.copayersCryptUtils = copayersCryptUtils;
         this.bwsApi = bwsApi;
     }
 
@@ -73,7 +76,7 @@ public class CreateWalletUseCase implements ICreateWalletUseCase {
                                 new SjclMessageEncryptor()
                                         .encrypt(
                                                 DEFAULT_WALLET_NAME,
-                                                CopayersCryptUtils.sharedEncryptingKey(
+                                                copayersCryptUtils.sharedEncryptingKey(
                                                         credentials.getWalletPrivateKey()
                                                                 .getPrivateKeyAsHex())),
                                 NetworkParametersUtils.fromId(
