@@ -33,7 +33,6 @@
 
 package org.openkuva.kuvabase.bwcj.domain.useCases.exchange.satoshisToCurrency;
 
-import org.bitcoinj.core.Coin;
 import org.openkuva.kuvabase.bwcj.data.repository.interfaces.rate.IRateRepository;
 
 import static org.openkuva.kuvabase.bwcj.domain.utils.MathUtils.cut;
@@ -47,20 +46,17 @@ public class SatoshisToCurrencyUseCase implements ISatoshisToCurrencyUseCase {
     }
 
     @Override
-    public double convertAndRound(long satoshis, String quote) {
-        return round(getValue(satoshis, quote), 2);
+    public double convertAndRound(double amount, String quote) {
+        return round(getValue(amount, quote), 2);
     }
 
     @Override
-    public double convertAndCut(long satoshis, String quote) {
-        return cut(getValue(satoshis, quote), 2);
+    public double convertAndCut(double amount, String quote) {
+        return cut(getValue(amount, quote), 2);
 
     }
 
-    private double getValue(long satoshis, String quote) {
-        return Double.valueOf(
-                Coin.valueOf(satoshis)
-                        .toPlainString())
-                * rateRepository.getByQuote(quote);
+    private double getValue(double amount, String quote) {
+        return amount * rateRepository.getByQuote(quote);
     }
 }

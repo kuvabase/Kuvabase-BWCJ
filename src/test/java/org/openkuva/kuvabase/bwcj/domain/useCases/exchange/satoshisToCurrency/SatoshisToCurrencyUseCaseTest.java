@@ -39,7 +39,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
 import org.openkuva.kuvabase.bwcj.data.repository.interfaces.rate.IRateRepository;
 
 public class SatoshisToCurrencyUseCaseTest {
@@ -57,8 +56,8 @@ public class SatoshisToCurrencyUseCaseTest {
     @Test
     public void testExecute() {
         Assert.assertEquals(
-                satoshisToCurrencyUseCase.convertAndRound(391562, "DASH_USD"),
-                1.d,
+                satoshisToCurrencyUseCase.convertAndRound(0.00391562, "DASH_USD"),
+                1.01d,
                 .0);
     }
 }
