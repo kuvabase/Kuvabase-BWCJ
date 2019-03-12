@@ -34,8 +34,9 @@
 package org.openkuva.kuvabase.bwcj.domain.utils;
 
 import org.bitcoinj.core.NetworkParameters;
+import org.openkuva.kuvabase.bwcj.data.entity.interfaces.transaction.ITransactionProposal;
 
 public interface INetworkParametersBuilder {
 
-    NetworkParameters fromID(String id);
+    NetworkParameters fromTP(ITransactionProposal tp);
 }

@@ -59,7 +59,7 @@ public class TransactionBuilder {
     }
 
     public Transaction buildTx(ITransactionProposal tp) {
-        NetworkParameters network = networkParametersBuilder.fromID(tp.getNetwork());
+        NetworkParameters network = networkParametersBuilder.fromTP(tp);
 
         Transaction transaction = new Transaction(network);
         transaction.setVersion(tp.getVersion());
