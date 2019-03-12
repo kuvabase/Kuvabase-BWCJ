@@ -64,6 +64,8 @@ public class TransactionBuilder {
         NetworkParameters network = networkParametersBuilder.fromID(toId(tp.getNetwork()));
 
         Transaction transaction = new Transaction(network);
+        transaction.setVersion(tp.getVersion());
+        transaction.setType(Transaction.Type.TRANSACTION_NORMAL);
 
         for (IOutput output : tp.getOutputs()) {
             transaction.addOutput(
@@ -120,6 +122,9 @@ public class TransactionBuilder {
     }
     public static Transaction sort(Transaction transaction, List<Integer> outputOrder) {
         Transaction result = new Transaction(transaction.getParams());
+        result.setVersion((int) transaction.getVersion());
+        result.setType(transaction.getType());
+
         for (TransactionInput input : transaction.getInputs()) {
             result.addInput(input);
         }
