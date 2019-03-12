@@ -11,7 +11,7 @@ apply plugin: 'java-library'
 apply plugin: 'com.novoda.bintray-release'
 
 group 'org.openkuva.kuvabase'
-version '0.1.12'
+version '0.1.13'
 
 repositories {
     google()
