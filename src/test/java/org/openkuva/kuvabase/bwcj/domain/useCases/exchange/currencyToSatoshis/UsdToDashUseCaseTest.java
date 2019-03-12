@@ -42,6 +42,8 @@ import org.mockito.MockitoAnnotations;
 
 import org.openkuva.kuvabase.bwcj.data.repository.interfaces.rate.IRateRepository;
 
+import static org.bitcoinj.core.Coin.SMALLEST_UNIT_EXPONENT;
+
 public class UsdToDashUseCaseTest {
 
     @Mock
@@ -59,7 +61,7 @@ public class UsdToDashUseCaseTest {
     public void testExecute() {
         Assert.assertEquals(
                 0.00391562d,
-                usdToDashUseCase.convertAndRound(1, "DASH_USD"),
+                usdToDashUseCase.convertAndRound(1, "DASH_USD", SMALLEST_UNIT_EXPONENT),
                 0.0d);
     }
 }
