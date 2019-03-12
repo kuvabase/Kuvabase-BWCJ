@@ -51,8 +51,6 @@ import org.openkuva.kuvabase.bwcj.domain.utils.INetworkParametersBuilder;
 
 import java.util.List;
 
-import static org.openkuva.kuvabase.bwcj.domain.utils.NetworkParametersUtils.toId;
-
 public class TransactionBuilder {
     private final INetworkParametersBuilder networkParametersBuilder;
 
@@ -61,7 +59,7 @@ public class TransactionBuilder {
     }
 
     public Transaction buildTx(ITransactionProposal tp) {
-        NetworkParameters network = networkParametersBuilder.fromID(toId(tp.getNetwork()));
+        NetworkParameters network = networkParametersBuilder.fromID(tp.getNetwork());
 
         Transaction transaction = new Transaction(network);
         transaction.setVersion(tp.getVersion());

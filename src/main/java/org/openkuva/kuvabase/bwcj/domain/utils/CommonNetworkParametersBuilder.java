@@ -35,10 +35,12 @@ package org.openkuva.kuvabase.bwcj.domain.utils;
 
 import org.bitcoinj.core.NetworkParameters;
 
+import static org.openkuva.kuvabase.bwcj.domain.utils.NetworkParametersUtils.toId;
+
 public class CommonNetworkParametersBuilder implements INetworkParametersBuilder {
 
     @Override
     public NetworkParameters fromID(String id) {
-        return NetworkParameters.fromID(id);
+        return NetworkParameters.fromID(toId(id));
     }
 }
