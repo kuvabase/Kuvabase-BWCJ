@@ -33,9 +33,9 @@
 
 package org.openkuva.kuvabase.bwcj.domain.utils;
 
+import com.google.common.io.BaseEncoding;
 import com.google.gson.GsonBuilder;
 
-import org.bitcoinj.core.Base58;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.core.Sha256Hash;
@@ -131,7 +131,7 @@ public final class CopayersCryptUtils {
             byte[] bytes = new byte[16];
             System.arraycopy(hash, 0, bytes, 0, bytes.length);
 
-            return Base58.encode(bytes); //todo use Base58 instead of standard base-64 to quip resolve dependencies issue in Android, possible can be bug
+            return BaseEncoding.base64().encode(bytes);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -176,7 +176,7 @@ public final class CopayersCryptUtils {
                         HEX.decode(walletPrivKey));
         byte[] bytes = new byte[16];
         System.arraycopy(hash, 0, bytes, 0, bytes.length);
-        return Base58.encode(bytes); //todo use Base58 instead of standard base-64 to quip resolve dependencies issue in Android, possible can be bug
+        return BaseEncoding.base64().encode(bytes);
     }
 
     public DeterministicKey derivedXPrivKey(DeterministicKey masterPrivateKey, NetworkParameters netParams) {
