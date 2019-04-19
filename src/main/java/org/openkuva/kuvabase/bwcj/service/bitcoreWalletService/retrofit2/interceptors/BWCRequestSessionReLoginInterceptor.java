@@ -78,7 +78,7 @@ public class BWCRequestSessionReLoginInterceptor implements Interceptor {
             return chain.proceed(chain.request());
         } catch (Exception e) {
             e.printStackTrace();
-            return chain.proceed(chain.request());
+            throw e;
         }
     }
 }
