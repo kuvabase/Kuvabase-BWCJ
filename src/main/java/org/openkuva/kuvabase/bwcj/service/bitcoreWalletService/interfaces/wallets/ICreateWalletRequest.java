@@ -45,4 +45,6 @@ public interface ICreateWalletRequest {
     String getPubKey();
 
     boolean isSingleAddress();
+
+    String getCoin();
 }

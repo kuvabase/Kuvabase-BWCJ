@@ -42,14 +42,15 @@ import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.pojo.wallets.Crea
 
 public class CreateWalletUseCase implements ICreateWalletUseCase {
 
+    private static final String DEFAULT_COIN = "btc";
+    private static final String DEFAULT_WALLET_NAME = "Personal Wallet";
+    private static final int DEFAULT_M = 1;
+    private static final int DEFAULT_N = 1;
+    private static final boolean DEFAULT_SINGLE_ADDRESS = true;
+
     private final ICredentials credentials;
     private final CopayersCryptUtils copayersCryptUtils;
     private final IBitcoreWalletServerAPI bwsApi;
-
-    private final String DEFAULT_WALLET_NAME = "Personal Wallet";
-    private final int DEFAULT_M = 1;
-    private final int DEFAULT_N = 1;
-    private final boolean DEFAULT_SINGLE_ADDRESS = true;
 
     public CreateWalletUseCase(
             ICredentials credentials,
@@ -68,6 +69,11 @@ public class CreateWalletUseCase implements ICreateWalletUseCase {
 
     @Override
     public String execute(boolean singleAddress) {
+        return execute(singleAddress, DEFAULT_COIN);
+    }
+
+    @Override
+    public String execute(boolean singleAddress, String coin) {
         return
                 bwsApi.postWallets(
                         new CreateWalletRequest(
@@ -86,7 +92,8 @@ public class CreateWalletUseCase implements ICreateWalletUseCase {
                                 credentials
                                         .getWalletPrivateKey()
                                         .getPublicKeyAsHex(),
-                                singleAddress))
+                                singleAddress,
+                                coin))
                         .getWalletID();
 
     }

@@ -50,6 +50,8 @@ public class GsonCreateWalletRequest implements ICreateWalletRequest {
     private String network;
     @SerializedName("singleAddress")
     private boolean singleAddress;
+    @SerializedName("coin")
+    private String coin;
 
     public GsonCreateWalletRequest() {
     }
@@ -61,6 +63,7 @@ public class GsonCreateWalletRequest implements ICreateWalletRequest {
         this.network = origin.getNetwork();
         this.pubKey = origin.getPubKey();
         this.singleAddress = origin.isSingleAddress();
+        this.coin = origin.getCoin();
     }
 
 
@@ -92,5 +95,10 @@ public class GsonCreateWalletRequest implements ICreateWalletRequest {
     @Override
     public boolean isSingleAddress() {
         return singleAddress;
+    }
+
+    @Override
+    public String getCoin() {
+        return coin;
     }
 }

@@ -42,14 +42,16 @@ public class CreateWalletRequest implements ICreateWalletRequest {
     private final String pubKey;
     private final String network;
     private final boolean singleAddress;
+    private final String coin;
 
-    public CreateWalletRequest(int m, int n, String name, String network, String pubKey, boolean singleAddress) {
+    public CreateWalletRequest(int m, int n, String name, String network, String pubKey, boolean singleAddress, String coin) {
         this.m = m;
         this.n = n;
         this.name = name;
         this.network = network;
         this.pubKey = pubKey;
         this.singleAddress = singleAddress;
+        this.coin = coin;
     }
 
 
@@ -81,5 +83,10 @@ public class CreateWalletRequest implements ICreateWalletRequest {
     @Override
     public boolean isSingleAddress() {
         return singleAddress;
+    }
+
+    @Override
+    public String getCoin() {
+        return coin;
     }
 }
