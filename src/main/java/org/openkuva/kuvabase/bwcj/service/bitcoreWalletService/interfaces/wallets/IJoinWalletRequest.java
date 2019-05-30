@@ -45,4 +45,6 @@ public interface IJoinWalletRequest {
     String getWalletId();
 
     String getxPubKey();
+
+    String getCoin();
 }

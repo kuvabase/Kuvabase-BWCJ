@@ -45,6 +45,8 @@ import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.wallet
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.wallets.IJoinWalletResponse;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.pojo.wallets.JoinWalletRequest;
 
+import static org.openkuva.kuvabase.bwcj.domain.useCases.wallet.DefaultConstants.DEFAULT_COIN;
+
 public class JoinWalletInCreationUseCase implements IJoinWalletInCreationUseCase {
 
     private final ICredentials credentials;
@@ -59,6 +61,11 @@ public class JoinWalletInCreationUseCase implements IJoinWalletInCreationUseCase
 
     @Override
     public IJoinWalletResponse execute(String walletId) {
+        return execute(walletId, DEFAULT_COIN);
+    }
+
+    @Override
+    public IJoinWalletResponse execute(String walletId, String coin) {
         ECKey walletPrivKey =
                 credentials.getWalletPrivateKey();
         String xPubKey =
@@ -111,7 +118,8 @@ public class JoinWalletInCreationUseCase implements IJoinWalletInCreationUseCase
                         encCopayerName,
                         requestPubKey,
                         walletId,
-                        xPubKey);
+                        xPubKey,
+                        coin);
 
         return
                 bwsApi.postWalletsWalletIdCopayers(

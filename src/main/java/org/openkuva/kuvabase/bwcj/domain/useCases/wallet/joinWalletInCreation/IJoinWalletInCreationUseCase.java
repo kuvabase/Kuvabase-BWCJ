@@ -38,4 +38,6 @@ import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.wallet
 public interface IJoinWalletInCreationUseCase {
     IJoinWalletResponse execute(String walletId);
 
+    IJoinWalletResponse execute(String walletId, String coin);
+
 }

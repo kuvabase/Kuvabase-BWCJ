@@ -42,14 +42,16 @@ public class JoinWalletRequest implements IJoinWalletRequest {
     private final String requestPubKey;
     private final String customData;
     private final String copayerSignature;
+    private final String coin;
 
-    public JoinWalletRequest(String copayerSignature, String customData, String name, String requestPubKey, String walletId, String xPubKey) {
+    public JoinWalletRequest(String copayerSignature, String customData, String name, String requestPubKey, String walletId, String xPubKey, String coin) {
         this.copayerSignature = copayerSignature;
         this.customData = customData;
         this.name = name;
         this.requestPubKey = requestPubKey;
         this.walletId = walletId;
         this.xPubKey = xPubKey;
+        this.coin = coin;
     }
 
     @Override
@@ -80,5 +82,10 @@ public class JoinWalletRequest implements IJoinWalletRequest {
     @Override
     public String getxPubKey() {
         return xPubKey;
+    }
+
+    @Override
+    public String getCoin() {
+        return coin;
     }
 }

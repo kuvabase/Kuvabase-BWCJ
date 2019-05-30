@@ -57,6 +57,9 @@ public class GsonJoinWalletRequest implements IJoinWalletRequest {
     @SerializedName("copayerSignature")
     String copayerSignature;
 
+    @SerializedName("coin")
+    private String coin;
+
     public GsonJoinWalletRequest() {
     }
 
@@ -67,6 +70,7 @@ public class GsonJoinWalletRequest implements IJoinWalletRequest {
         this.requestPubKey = origin.getRequestPubKey();
         this.walletId = origin.getWalletId();
         this.xPubKey = origin.getxPubKey();
+        this.coin = origin.getCoin();
     }
 
     @Override
@@ -97,6 +101,11 @@ public class GsonJoinWalletRequest implements IJoinWalletRequest {
     @Override
     public String getxPubKey() {
         return xPubKey;
+    }
+
+    @Override
+    public String getCoin() {
+        return coin;
     }
 }
 
