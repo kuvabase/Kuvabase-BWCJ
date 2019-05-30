@@ -40,13 +40,13 @@ import org.openkuva.kuvabase.bwcj.domain.utils.messageEncrypt.SjclMessageEncrypt
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.interfaces.IBitcoreWalletServerAPI;
 import org.openkuva.kuvabase.bwcj.service.bitcoreWalletService.pojo.wallets.CreateWalletRequest;
 
-public class CreateWalletUseCase implements ICreateWalletUseCase {
+import static org.openkuva.kuvabase.bwcj.domain.useCases.wallet.DefaultConstants.DEFAULT_COIN;
+import static org.openkuva.kuvabase.bwcj.domain.useCases.wallet.DefaultConstants.DEFAULT_M;
+import static org.openkuva.kuvabase.bwcj.domain.useCases.wallet.DefaultConstants.DEFAULT_N;
+import static org.openkuva.kuvabase.bwcj.domain.useCases.wallet.DefaultConstants.DEFAULT_SINGLE_ADDRESS;
+import static org.openkuva.kuvabase.bwcj.domain.useCases.wallet.DefaultConstants.DEFAULT_WALLET_NAME;
 
-    private static final String DEFAULT_COIN = "btc";
-    private static final String DEFAULT_WALLET_NAME = "Personal Wallet";
-    private static final int DEFAULT_M = 1;
-    private static final int DEFAULT_N = 1;
-    private static final boolean DEFAULT_SINGLE_ADDRESS = true;
+public class CreateWalletUseCase implements ICreateWalletUseCase {
 
     private final ICredentials credentials;
     private final CopayersCryptUtils copayersCryptUtils;
